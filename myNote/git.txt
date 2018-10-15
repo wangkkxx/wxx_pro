@@ -1,0 +1,140 @@
+﻿1.安装
+  Linux:
+    查看是否安装:git
+    安装:sudo apt-get install git
+  Mac Os:
+    AppStore下载:Xcode-->运行Xcode-->选择菜单'Xcode-Preferences-Downloads'-->选择'Command Line Tools'-->点击install
+  windows:
+    下载Git-->安装-->开始菜单'Git-Git Bash'
+    设置:git config --global user.name 'Your Name'
+         git config --global user.email'Your Email'
+
+2.创建版本库(repository)
+  (1)创建一个版本库:
+    mkdir dir_name
+    cd dir_name
+    pwd 显示当前目录
+    git init 将这个目录变成Git可以管理的仓库
+  (2).git目录
+    .git目录是Git用来跟踪管理版本库的,默认隐藏,用ls -ah命令可以看见
+
+3.把文件添加到版本库
+  Windows:下载Notepad++代替记事本编辑文件,设置默认编码为UTF-8 without BOM
+  git add '文件名' 把文件添加到暂存区(可反复多次使用,添加多个文件)
+  git commit -m'提交说明' 把文件提交到仓库(可以一次提交很多文件)
+  例:git add file1.txt
+     git add file2.txt file3.txt
+     git commit -m'add 3 files'
+
+4.版本回退
+  git status 查看工作区的状态(哪个文件被修改了.是否准备提交,冲突文件)
+  git diff 查看修改的内容
+  git log 查看提交日志     
+    git log --pretty=online 查看简化的提交日志
+  git reset --hard HEAD^ 回退到上一个版本
+    HEAD表示当前版本  
+      HEAD^表示上一版本  HEAD^^表示上上一个版本 HEAD~100表示上100个版本
+  git reset --hard commit_id 回退到commit_id指向的版本
+  git reflog 查看命令历史(得到commit_id)
+  
+5.工作区和暂存区
+  工作区:电脑里的目录(learngit)
+  版本库:.git目录
+    暂存区(stage/index)    使用git add将文件添加到暂存区
+    分支master             再使用git commit将暂存区的所有内容提交到分支
+    指向master的HEAD
+
+6.管理修改
+  git diff HEAD --文件名  查看工作区和版本库里面最新版本的区别
+  第一次修改->git add-->第二次修改-->git add-->...-->git commit
+
+7.撤销修改
+  (1)丢弃工作区某个文件的修改  git checkout --file (版本库里的版本替换工作区的版本)
+  (2)丢弃已添加到暂存区某个文件的修改  
+    第一步:git reset HEAD file  把暂存区的修改回退到工作区最新版本
+    第二部:git checkout --file  丢弃工作区的修改
+  (3)丢弃已经提交到版本库的修改  版本回退
+
+8.删除文件
+  rm file 删除工作区的文件
+  git rm file 删除版本库中的文件
+  删错:git checkout -- file  版本库里的版本替换工作区的版本
+
+9.远程仓库
+  GitHub 提供Git仓库托管服务  
+  本地Git仓库和GitHub仓库之间的传输是通过SSH加密的
+  1.注册GitHub账号
+  2.创建SSH Key
+    在用户主目录下,看看有没有.ssh目录,如果有,再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件,如果没有,打开Shell(windows下打开Git Bash),创建SSH Key:
+      ssh-keygen -t rsa -C'Your Emali'
+    id_rsa和id_rsa.pub是SSH Key的秘钥对,id_rsa是秘钥,id_rsa.pub是公钥
+  3.登录GitHub,打开'Account settings','SSH Key'页面,点击'Add SSH Key',填上任意title,在Key文本框里粘贴id_rsa.pub文件的内容,点击'Add Key'
+
+10.添加远程仓库
+  1.登录GitHub,右上角点击'create a new repo'按钮,添加仓库名,点击'create repository'
+  2.把本地仓库与远程仓库关联:
+    git remote add orgin git@github.com:github账号名/远程仓库名(比如:learngit.git)
+    orgin 远程库的名字
+  3.把本地库的所有内容推送到远程库上
+    第一次推送master: git push -u orgin master
+      第一次推送master分支时,加上-u参数,Git不但会把本地的master分支内容推送到远程的新master分支,还会把本地master分支和远程的master分支关联起来,在以后的推送或者拉取时就可以简化命令
+    本地提交:git push orgin master
+
+11.从远程库克隆
+  (1)登录GitHub,创建新仓库(gitskills)
+  (2)勾选'initialize this repository with a README',自动创建一个README.md文件
+  (3)git clone git@github.com:github账号名/仓库名(gitskills.git)
+  (4)查看:cd 仓库(gitskills) -->ls
+  Git支持多种协议,包括https,但通过ssh支持的原生协议速度最快
+
+12.分支管理
+  master:主分支
+  HEAD:指向当前分支
+  git checkout -b dev 创建并切换到dev分支    (dev表示分支)
+  git branch 查看所有分支,当前分支前会标*
+  git checkout master 切换到master分支
+  git merge dev 合并指定分支(dev)到当前分支(master)
+  git branch -d dev 删除分支(dev)
+
+13.解决分支冲突
+  可以通过git status查看冲突文件
+  git log --graph (--pretty=oneline --abbrev-commit) 查看分支合并情况
+
+14.分支管理策略
+  在实际开发中,master分支应该是稳定的,也就是仅用来发布新版本,平时不能在上面干活;
+  dev分支是不稳定的,可以将dev合并到master上;
+  合并分支时,加上--no-ff参数就可以用普通模式合并,合并后的历史有分支,而fast forword合并则看不出来做过合并
+  git merge --no-ff -m"merge with no-ff" dev 合并dev分支,禁用fast forword
+
+15.Bug分支
+  假设是master分支上出现bug:
+    1.git stash 保留当前工作现场,可以等以后恢复现场后继续工作
+    2.切换到master分支:git checkout master  
+    3.创建临时分支issue-101:git checkout -b issue-101  
+    4.修改后提交:git add file  git commit -m ''
+    5.切换到master分支,并完成合并:git merge --no-ff -m'merged bug fix 101' issue-101
+    6.回到dev分支完成其他任务:
+      git checkout dev
+      git status
+      git stash list  查看工作现场
+      git stash apply 恢复工作现场,stash内容不删除,需要用git stash drop来删除
+      git stash pop 恢复工作现场,会删除stash内容
+      如果多次stash,恢复的时候,先用git stash list查看,然后恢复指定的stash:git stash apply stash@{0}
+
+16.feature分支
+  添加新功能时,一些实验性的代码会把主分支搞乱,所以,每添加一个新功能,最好新建feature分支,在上面开发,完成后合并,最后,删除该feature分支
+  1.新建feature分支:git checkout -b feature-vulcan(分支名)
+  2.新分支开发完成后添加到暂存区:git add vulcan.py
+  3.检查工作区状态:git status
+  4.提交新分支:git commit -m 'add feature vulcan'
+  5.切回dev,准备合并:git checkout dev
+  6.合并:git merge dev
+  7.删除feature分支:git branch -d feature-vulcan
+  8.强行删除feature分支:git branch -D feature-vulcan(feature分支没有被合并的情况下需要强行删除)
+
+17.多人协作
+  从远程仓库克隆时,实际上Git自动把本地的master分支和远程的master分支对应起来了,远程仓库的默认名称为origin
+  查看远程库的信息:git remote
+    git remote -v 显示更详细的远程库信息,该命令会显示可以抓取(fetch)和推送(push)的origin地址,如果没有推送权限,就看不到push地址
+  推送分支:git push origin master/dev(分支名)
+  需要推送的分支:master(主分支)/dev(开发分支)

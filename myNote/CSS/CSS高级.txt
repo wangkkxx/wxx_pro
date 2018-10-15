@@ -1,0 +1,323 @@
+﻿CSS3 Core
+一.复杂选择器
+  1.兄弟选择器  +/~
+    兄弟元素:具备相同父元素的平级元素之间称为兄弟元素
+    (1)相邻兄弟选择器  +/~
+      作用:获取某元素后相邻的兄弟元素
+      语法:选择器1+选择器2{}
+      注意:兄弟选择器只能向后查找
+    (2)通用兄弟选择器
+      作用:获取某元素后所有满足条件的兄弟元素
+      语法:选择器1~选择器2{}
+  2.属性选择器  []
+    作用:将元素附带的属性用于选择器中,从而为带有指定属性的元素设置样式
+    语法:
+      [id] 匹配所有附带id属性的元素
+      p[id] 匹配附带id属性的p元素
+      [id][class] 匹配同时附带id属性和class属性的元素
+      p[id][class] 匹配附带id属性和class属性的p元素
+      p[id='p1'] 匹配附带id属性的p元素,其中id属性值为p1  等同于p#p1
+      p[class^='b'] 匹配class属性值以b开头的所有p元素
+      p[class$='b'] 匹配class属性值以b结尾的所有p元素
+      p[class*='b'] 匹配class属性值中包含子字符串b的所有p元素
+      p[class~='myClass'] 匹配class属性值中包含指定词汇(myClass)的p元素
+  3.伪类选择器  :
+    链接伪类    :link/:visited
+    动态伪类    :hover/:active/:focus
+    (1)目标伪类    :target
+      作用:突出显示活动的HTML锚点元素,匹配被激活的锚点
+      语法:选择器:target{}
+    (2)结构伪类
+      作用:通过元素的结构关系来匹配元素(上下级嵌套)
+      :first-child 匹配属于其父元素的首个子元素
+      :last-child 匹配属于其父元素的最后一个子元素
+      :nth-child(n) 匹配属于其父元素的第n个元素
+      :empty 匹配没有子元素(包括文本节点)的每个元素
+      :only-child 匹配属于其父元素的唯一子元素
+    (3)否定伪类
+      作用:匹配非指定元素/选择器的的每个元素
+      语法:选择器1:not(选择器2){}
+      例:tr:not(:first-child){}  td:not(tr:first-child)
+  4.伪元素选择器  ::/:
+    作用:用于为其他选择器添加特殊效果
+    (1)::first-letter/:first-letter  
+      作用:匹配元素的首字符
+    (2)::first-line/:first-line
+      作用:匹配元素的首行
+      注意:首字符与首行样式冲突时,优先使用首字符样式
+    (3)::selection
+      作用:匹配被用户选取的内容
+      注意:只能修改文本颜色和背景颜色
+    (4)内容生成  ::before/::after
+      content CSS属性,使用CSS动态地向元素中插入一段内容
+        插入字符串:content:'字符串';
+	插入图片:content:url(图片路径);
+      :before
+        作用:匹配到某元素的内容区域之前
+        例:p:before{content:'李白'}
+      :after
+        作用:匹配到某元素的内容区域之后
+        例:p:after{content:'杜甫'}
+      应用1:处理上外边距溢出
+        .parent:before{
+	  content:'';
+	  display:table;
+	}
+      应用2:解决浮动元素对父元素高度的影响
+        .parent:after{
+	  content:'';
+	  display:block;
+	  clear:both;
+	}
+二.弹性布局 Flexible Box
+  1.相关概念
+    弹性(Flex)布局:用来为框模型提供最大的灵活性,主要解决某元素中子元素的布局方式
+    容器/项目/主轴/交叉轴:
+      采用Flex布局的元素,称为Flex容器(简称'容器'),它的所有子元素将自动称为容器的成员,称为Flex项目(简称'项目'),项目们排列方向的轴称为主轴,与主轴垂直相交的轴称为交叉轴
+  2.将元素变为弹性容器  display
+    弹性容器:将元素变为Flex容器后,那么它所有的子元素都将变为Flex项目,都允许按照弹性布局的方式排列
+    取值:
+      flex 将块级元素变为容器
+      inline-flex 将行内元素变为容器
+    注意:
+      ①元素设置为flex容器之后,子元素的float,clear,vertical-align将失效
+      ②元素变为flex容器之后,子元素的尺寸允许被修改(把子元素变成块级元素)
+  3.容器属性
+    (1)flex-direction
+      作用:指定容器的主轴及其排列方向
+      取值:
+        row 默认值,主轴为x轴,起点在左端
+	row-reverse 主轴为x轴,起点在右端
+	column 主轴为y轴,起点在顶部
+	column-reverse 主轴为y轴,起点在底部
+    (2)flex-wrap
+      作用:当一个主轴排列不下所有项目时,项目是否换行显示
+      取值:
+        nowrap 默认值,不换行,即空间不足时也不换行,项目会自动缩小
+	wrap 换行
+	wrap-reverse 换行并反转
+    (3)flex-flow
+      作用:flex-direction和flex-wrap的缩写形式
+    (4)justify-content
+      作用:定义项目在主轴上的对齐方式
+      取值:
+        flex-start 在主轴的起点对齐
+	flex-end 在主轴的终点对齐
+	center 在主轴上居中对齐
+	space-between 两端对齐
+	space-around 每个项目两端的间距相同
+    (5)align-items
+      作用:定义项目在交叉轴上的对齐方式
+      取值:
+        flex-start 在交叉轴上起点对齐
+	flex-end 交叉轴上终点对齐
+	center 交叉轴上居中对齐
+	baseline 交叉轴上基线对齐
+	stretch 如果项目未设置尺寸,在交叉轴上占满空间(与主轴排列方向有关)
+  4.项目属性
+    该组属性只能设置在某一个项目上,只控制一个项目
+    (1)order
+      作用:定义项目的排列顺序,值越小,越靠近起点,默认值为0
+      取值:整数数字,无单位
+    (2)flex-grow
+      作用:定义项目的放大比例,如果容器有足够的剩余空间,项目按比例放大
+      取值:整数数字,无单位;
+           默认值为0,不放大;
+	   取值越大,占据剩余空间的比例越多
+    (3)flex-shrink
+      作用:定义项目缩小比例,即容器空间不足时,项目按比例缩小
+      取值:整数数字,无单位;
+           默认值为1,空间不足时,等比例缩小;
+	   取值为0时,则不缩小;
+	   值越大,缩小比例越大
+    (4)align-self
+      作用:定义当前项目在交叉轴上的对齐方式
+      取值:
+        flex-start 起点对齐
+	flex-end 终点对齐
+	center  居中对齐
+	baseline 基线对齐
+        stretch 未设定项目高度时,占满元素空间
+	auto 自动,继承父元素align-items的属性值
+三.转换
+  1.什么是转换
+    改变元素在页面中的位置,大小,角度以及形状的一种方式
+    2D转换:只在x轴和y轴上发送转换
+    3D转换:增加z轴的转换效果
+  2.转换属性 transform
+    取值:
+      none 默认值,即元素无转换
+      transform-function 表示1个或多个转换函数(多个函数之间用空格隔开)
+  3.转换原点 transform-origin
+    取值:数值/百分比/关键词
+      默认的原点在元素的中心位置:center center/50% 50%
+  4.2D转换
+    (1)位置(位移) 
+      transform:translate()
+      取值:
+        translate(x) 指定元素在x轴上位移距离
+	translate(x,y) 指定元素在x轴和y轴上位移的距离
+	translateX(x) 指定元素在x轴上位移距离
+	translateY(y) 指定元素在y轴上位移距离
+    (2)缩放 
+      transform:scale()
+      取值:
+        scale(value) 横向和纵向缩放比例一样,默认值为1
+        scale(x,y) 横向缩放x倍,纵向缩放y倍
+        scaleX(x) 只在x轴方向缩放
+        scaleY(y) 只在y轴方向缩放
+        value<0时,放大,水平和垂直都翻转180度
+    (4)旋转 
+      transform:rotate(ndeg)
+      取值:n>0 顺时针旋转;n<0 逆时针旋转
+      注意:
+        ①旋转是连同坐标轴一起旋转,所以会影响到旋转后的位移效果;
+        ②转换原点也会影响最后的转换效果
+    (5)倾斜
+      transform:skew()
+      取值:skewX(xdeg) 在x轴方向倾斜,实际改变的角度是y轴的角度值
+	     x>0,向左倾斜;x<0,向右倾斜
+           skewY(ydeg) 在y轴方向倾斜,实际改变的角度是x轴的角度值
+	     y>0,向上倾斜;y<0,向下倾斜
+	   skew(x)  等同于skewX(x)
+           skew(x,y) 同时在x,y轴产生倾斜	
+  5.3D转换
+    (1)透视距离 perspective
+      属性:perspective
+      取值:数字px
+      模拟眼睛到3D转换元素之间的距离   
+      注意:该属性要加在3D元素的父元素上
+    (1)3D旋转 rotate
+      取值:rotateX(xdeg) 以x轴为中心轴旋转元素
+           rotateY(ydeg) 以y轴为中心旋转元素
+	   rotateZ(zdeg) 以z轴为中心旋转元素
+	   rotate3D(x,y,x,ndeg) x,y,z取值为大于0的数字,表示该轴参与旋转,取值为0则不参与旋转
+四.过渡
+  1.过渡属性  
+    (1)指定过渡属性  transition-property
+      作用:指定哪个属性值在变化的时候需要用过渡的方式来体现
+      取值:
+        all 能使用过渡的属性,都用过渡体现
+	具体属性名 指定需要过渡的属性
+        例:transition-property:background;
+      允许设置过渡效果的属性:
+        ①颜色属性;
+	②取值为数字的属性;
+	③转换属性;
+	④渐变属性;
+	⑤visibility;
+    (2)指定过渡时长  transition-duration
+      作用:指定在多长时间内完成过渡操作
+      取值:以s/ms为单位的数值
+    (3)指定过渡的速度时间曲线函数  transition-timing-function
+      取值:ease 默认值,慢-快-慢
+           linear 匀速
+	   ease-in 慢-快
+	   ease-out 快-慢
+	   ease-in-out 慢-加速-减速-慢
+    (4)指定过渡的延迟  transition-delay
+      取值:以s/ms为单位的数值
+    注意:过渡属性的编写位置
+      将过渡放在元素声明的样式中,既管去,又管会;
+      将过渡放在触发操作中,只管去,不管回
+    (5)简写
+      transition:property duration timing-function delay;
+      property,duration必须加上
+      例:<div id='d1'>滚</div> 
+        CSS样式:
+         #d1{
+	    width:100px;
+	    height:100px;
+	    background:orange;
+	    border-radius:50%;
+            border:5px solid purple;
+            text-align:center;
+	    line-height:100px;
+	    transition:all 5s ease-in-out 1s;
+	  }
+	  #d1:hover{
+	    transform:translateX(500px) rotate(1080deg);
+	  }
+五.动画
+  1.声明
+    为动画起名,定义关键帧
+    语法: 
+      @keyframes 动画名{
+        /*定义关键帧*/
+	0%{动画开始时元素的样式}
+	...
+	100%{动画结束时元素的样式}
+      }
+      浏览器兼容--加前缀
+        例:
+         @-webkit-keyframes 动画名{}  Chrome
+         @-moz-keyframes 动画名{}    Firefox
+         @-ms-keyframes 动画名{}     IE
+         @-o-keyframes 动画名{}    Opera
+  2.调用
+    (1)指定要调用的动画名 animation-name
+    (2)指定动画执行周期 animation-duration
+      取值:以s/ms为单位的数值
+    (3)指定动画执行速度 animation-timing-function
+      取值:ease/linear/ease-in/ease-out/ease-in-out
+    (4)指定动画的延迟时间  animation-delay
+      取值:以s/ms为单位的数值
+    (5)指定动画播放的次数 animation-iteration-count
+      取值:无单位数字/infinite(无限)
+    (6)指定动画的播放方向 animation-direction
+      取值:normal 默认值,正常播放0%~100%
+           reverse 逆向播放
+	   alternate 轮流播放 奇正偶反
+    (7)简写 animation
+      animation:name duration timing-function delay iteration-count direction;
+      必须项:name,duration
+      例: div{
+	  width:200px;
+          height:200px;
+          border:2px solid green;
+	  margin:100px auto;
+	  }
+	  @keyframes change{
+	    0%{background:orange;
+	    }
+	    50%{
+	      background:pink;
+	      border-radius:50%;
+	    }
+	    100%{
+	      background:yellow;
+	    }
+	  }
+	  div:hover{
+	    animation-name:change;
+            animation-duration:5s;
+	    animation-timing-function:ease-out;
+	    animation-delay:1s;
+	    animation-iteration-count:infinite;
+	    animation-direction:reverse;
+	    /*简写-> animation:change 5s ease-out 1s infinite reverse;*/
+	  }
+    (8)指定动画在播放前或播放后的状态  animation-fill-mode
+      取值:none 默认值
+           forwards 动画播放完成以后,保持在最后一帧的状态
+	   backwards 动画播放前,延迟时间内,动画保持在第一帧的状态
+	   both forwards和backwards的结合
+    (9)指定动画处于播放还是暂停的状态上 animation-play-state
+      取值:paused 暂停
+           running 播放
+
+六.CSS优化
+  1.CSS优化原则
+    (1)尽量减少HTTP请求
+      css sprites:合并多个背景图像到一个单独图像,然后通过background-image和background-position进行调整
+      image maps:结合多个图像到一个图像,其总体规模大致是相等的,但是减少了HTTP请求的数量,从而加快页面显示速度
+    (2)页面顶部引入CSS文件
+      可以提高页面加载速度;样式表放在头部,允许页面逐步呈现
+    (3)将CSS和JS文件放到外部独立的文件
+      页面引入外部文件,将由浏览器缓存,后续页面会使用缓存
+  2.CSS代码优化
+    (1)合并样式
+    (2)缩小样式文件,代码压缩
+      使用代码压缩工具(比如yuicompressor)
+    (3)选择更优的样式属性值，不要在HTML页面中缩放图像
+    (4)避免空的src和href

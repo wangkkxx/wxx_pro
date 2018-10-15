@@ -1,0 +1,549 @@
+
+CSS
+一.什么是CSS?
+  CSS:Cascading Style Sheets 层叠样式表
+  作用:设置HTML网页元素的样式(修饰网页)
+  HTML与CSS的关系:
+    HTML:构建网页内容
+    CSS:修饰网页
+
+二.CSS语法规范
+  1.使用CSS的方式:
+    内联样式(行内样式)
+      特点:将CSS样式定义在HTML的开始标记中
+      例:<p style="color:pink;font-size:60px">p标签内联样式</p>
+    内部样式
+      特点:在网页的头部增加<style></style>标签,在该标签内声明所有样式
+      例:<style>
+	   div{width:400px;height:400px;color:red;}
+	 </style>
+    外部样式
+      特点:独立于HTML网页的CSS文件,在head位置中引入CSS文件
+      例:<link rel='stylesheet' href='01.css'>
+  2.CSS的样式特点
+    (1)继承性
+      子元素继承父元素的样式
+    (2)层叠性
+      可以为一个元素定义多个样式规则,规则中的属性不冲突时,可以同时都应用到当前元素上
+    (3)优先级
+      样式声明有冲突时,则按照样式的优先级来应用样式
+        浏览器的缺省设置 低
+        内部样式&外部样式 中-就近原则:比较元素与<style>/<link>标签的远近 
+        内联样式 高
+    (4)调整优先级
+      !important 规则
+        加在属性值后面
+        例:p{color:red !important;}
+
+三.选择器
+  作用:匹配元素
+  1.通用选择器
+    语法:*{}
+    作用:可以匹配页面上的任意元素,效率比body{}略低;
+  2.元素选择器
+    语法:元素名{}
+    作用:匹配到页面中相同的元素
+  3.类选择器
+    语法:
+      声明:.类名{}
+      引用:<标签 class='类名'></标签>  
+      注:类名不能以数字开头,不能包含特殊字符(_和-除外);
+    作用:通过元素的class属性来引用类选择器
+    特殊用法:多类选择器:一个元素引用多个类选择器  <标签 class='类名1 类名2'></标签>
+             分类选择器:将元素选择器和类选择器结合使用  元素名.类名{}
+  4.id选择器
+    作用:设置指定id元素的样式
+    语法:#id值{}    <p id='p1'></p>
+  5.群组选择器
+    作用:将多个选择放在一起进行样式的声明
+    语法:选择器1,选择器2,选择器3...{}    例:div,.p1,#d1,footer.s1,p span{}
+  6.后代选择器
+    作用:通过元素的后代关系匹配元素(多层嵌套)
+    语法:选择器1 选择器2...{}      例:div p .p1 #s1{}
+  7.子代选择器
+    作用：通过元素的子代关系匹配元素(一层嵌套)
+    语法:选择器1(父)>选择器2(子){}    例:div>span{color:red;font-size:40px} 
+  8.伪类选择器
+    作用:匹配元素不同的状态
+    语法:选择器:伪类选择器{}
+    分类:
+      链接伪类
+        :link 尚未访问时的状态
+	:visited 已访问的状态
+      动态伪类
+        :hover 鼠标悬停时的状态
+	:active 被激活(点击)时的状态
+	:focus 获取焦点时的状态
+  选择器优先级:
+    元素选择器    1(表示权值为1,权值越大,优先级越高)
+    类选择器      10
+    伪类选择器    10
+    ID选择器      100
+    内联样式      1000
+    !important    最高
+    选择器的权值可以相加,大的优先;如果权值相同,采用就近原则
+    例:div p.one span > div .one span
+
+四.CSS样式属性
+  1.尺寸和边框  width/height border
+    (1)单位
+      尺寸单位
+        px:像素/in:英寸(1in=2.54cm)/pt:磅(1pt=1/72in)
+	相对单位:
+	  em:相对于元素本身字体的大小乘以倍数  2em:相对于父元素字体的两倍
+	  rem:相对于根元素字体大小乘以倍数  2rem:相对于根元素字体的两倍
+	  %:相对于父元素的百分比单位
+      颜色单位
+        rgb:rgb(r,g,b)  取值范围:0~255   例:rgb(0,0,255)   
+	rgba(r,g,b,alpah)  alpah表示透明度(0-1)  例:rgba(0,0,0,.3)
+	十六进制:#00fa1b/#0fa
+	英文单词:red,green,yellow,blue,grey,black...
+    (2)尺寸属性
+      width/min-width/max-width
+      height/min-height/max-height
+      页面中允许设置尺寸的元素:
+        1.所有块级元素:div/p/h1~h6/结构标记/列表元素
+	2.行内块元素:表单控件元素(单选按钮/复选按钮除外)
+	3.本身具备width和height属性的元素:img/table
+	注意:大部分的行内元素是不能修改尺寸的
+    (3)溢出处理
+      溢出:使用尺寸属性控制框的大小时,如果内容所需的空间大于框本身的空间,就会导致内容溢出;默认都是纵向溢出
+      属性:overflow/overflow-x/overflow-y
+      取值:visible 溢出可见,默认值
+           hidden  隐藏溢出内容
+	   scroll  显示滚动条,溢出时可用(x,y方向都显示滚动条,滚动条占据元素内空间)
+	   auto    自动,溢出时自动显示滚动条并可用
+    (4)边框属性
+      边框的简写方式:
+        border:width style color;    例:border:1px solid black;
+	  width:边框的宽度,单位为px;
+	  style:边框的样式
+	    值:solid(实线)/dotted(虚线-点)/dashed(虚线-线)
+	  color:边框的颜色
+	    值:颜色值/transparent(透明)
+      边框属性
+        border-width/style/color:值;
+        单边属性:border-left/right/top/bottom:width style color;(简写)
+	         border-left/right/top/bottom-width:1px;
+	         border-left/right/top/bottom-style:solid/dotted/dashed;
+		 border-left/right/top/bottom-color:color/transparent;
+          例:倒三角
+	    p{
+	      width:0;
+	      height:0;
+	      border:10px solid transparent;
+	      border-top-color:gray;
+	     }
+      边框倒角
+	简写:border-radius:top right bottom left;(顺时针方向)
+        单角设置:border-top-left-radius:左上角
+	         border-top-right-radius:右上角
+		 border-bottom-left-radius:左下角
+		 border-bottom-right-radius:右下角
+	单位:px/%
+	例:圆
+	  p{
+	    width:10px;
+	    height:10px;
+	    border:1px solid gray;
+	    background:gray;
+	    border-radius:50%;
+	    }
+    (5)阴影
+      属性:box-shadow
+	取值:h-shadow 水平方向的偏移,必须值,正右负左
+	     v-shadow 垂直方向的偏移,必须值,正下负上
+	     blur 阴影的模糊距离,值越大,模糊效果越明显
+	     spread 阴影的尺寸,指定要在基础阴影上扩充出来的大小距离
+	     color 阴影的颜色
+	     inset 将默认的外阴影改为内阴影
+	例:box-shadow:10px 10px 30px 10px gray inset;
+    (6)轮廓
+      边框的边框
+      属性：outline:width style color
+      取消轮廓：outline:none/0;
+  2.框模型(盒子模型)  margin/padding/box-sizing
+    (1)什么是框模型(box model)?
+      定义了元素框处理元素的内容,内边距,外边距以及边框的一种计算方式
+      外边距:边框与边框之间的距离
+      内边距:内容与边框之间的距离
+      框模型的计算方式:元素(width/height)+边框+外边距+内边距
+    (2)外边距
+      属性:margin
+      单边定义:margin-top/bottom/left/right
+      取值:px:像素单位,取值为负数时,元素向着相反的方向移动 
+	   %:相对于父元素的百分比值
+	   auto:自动计算外边距的值 --实现块级元素的水平居中
+      简写:margin:值(四个方向)
+           margin:上下 左右
+	   margin:上 左右 下
+	   margin:上 右 下 左
+      自带外边距的元素:body/p/h1~h6/ul/ol/dl/dd/pre/
+        通过CSS Reset的方式来重置具备外边距的元素:
+	  p,h1,ul,pre...{margin:0;}
+      外边距的特殊效果:
+        ①两个元素的外边距相遇时,垂直方向外边距会发生合并,取较大值;水平方向外边距会叠加,取两外边距之和
+        ②行内元素和行内块元素
+          行内元素垂直外边距无效,但左右外边距有效并会相加
+	  行内块元素,可以设置垂直外边距,但设置后整行元素都会跟着发生改变
+        ③外边距溢出:
+	  在特殊情况下,为元素设置边距时会作用到父元素上:
+	    1.父元素没有上边框
+	    2.为第一个子元素设置上边框
+	  解决:
+	    1.为父元素增加上边框
+	      弊端:对父元素的高度有影响
+	    2.使用父元素的内边距取代子元素的外边距(将父元素变大)
+	      弊端:对父元素的高度有影响
+	    3.在父元素的第一个子元素位置处增加一个空的<table></table>
+    (3)内边距:元素边框与内容之间的间距,内边距会扩大边框占地区
+      属性:padding
+      单边定义:padding-top/bottom/left/right
+      取值:px 像素,绝对单位
+           %  相对单位(父元素)
+    (4)box-sizing
+      作用:指定框模型的计算方式
+      取值:content-box 默认方式
+             实际尺寸:width/height+border+margin+padding
+           border-box  元素的尺寸包含border和padding的值
+             实际尺寸:width/height+margin
+  3.背景 background
+    (1)背景属性简写方式:
+      background:color url() repeat attachment position
+    (2)背景颜色:background-color
+      注意:背景颜色从边框位置处开始填充(包含边框的位置)
+    (3)背景图片:background-image
+      例:background-image:url('01.jpg');
+    (4)背景图像平铺:background-repeat
+      取值:repeat  平铺,默认值
+	   no-repeat  不平铺,只显示一次
+	   repeat-x  只在水平方向平铺
+	   repeat-y  只在垂直方向平铺
+    (5)背景图片的尺寸:background-size
+      例:background-size:300px 300px/100% 100%/cover/contain;
+      取值:width/height
+	   cover 覆盖,将背景图等比例放大,直到覆盖元素的所有区域
+           contain 将背景图等比例放大,直到覆盖元素的长或宽
+    (6)背景图片固定:background-attachment
+      作用:将图片固定在窗口的固定位置,不会随着滚动条滚动
+      取值:scroll 默认值,滚动
+	   fixed  固定
+    (7)背景图片定位:background-position
+      作用:改变背景图在元素中的位置
+      取值:x 背景图在水平方向的偏移距离,正右负左 px/%
+	   y 背景图在垂直方向的偏移距离,正下负上 px/%
+	     关键词:left/center/right/center/top/bottom
+	     x/y取负值:只显示部分图片  例:background-position:-416px -180px;
+  4.渐变
+    (1)渐变的主要因素
+      色标:一种颜色及其出现的位置
+    (2)分类
+      线性渐变/径向渐变/重复渐变
+      属性:background-image
+      1.线性渐变
+        取值:linear-gradient(angle,color-point1,color-point2...)
+          ①angle 渐变角度                角度值
+	    关键词:to top    从下向上    0deg
+	           to bottom 从下向上    180deg
+		   to left   从右向左    270deg
+		   to right  从左向右    90deg
+          ②color-point 色标:颜色&位置
+	例:background-image:linear-gradient(to right,red 0%,orange 50%,yellow 100%);
+      2.径向渐变
+        取值:radial-gradient([size at position],color-point1,color-point2...);
+	  size at position:
+	    size:半径,以px为单位的数字/%
+	    position:圆心的位置
+	      取值:x y 
+	        关键词:left/center/right/top/bottom
+        例:background-image:radial-gradient(250px at 50px 50%,violet 0%,pink 100%);
+      3.重复渐变
+        例:
+	  background-image:repeating-linear-gradient(to right,white 0,purple 300px);
+	  background-image:repeating-radial-gradient(150px at center center,violet 0,pink 100px);
+	在重复渐变中,色标的位置只能用绝对值
+      4.浏览器兼容性
+        http://caniuse.com  查看css属性支持的浏览器版本号
+        低版本浏览器不支持渐变属性
+	可以通过设置浏览器前缀的方式,让浏览器支持渐变
+	  firefox:-moz-
+	  IE:-ms-
+          Oprea:-o-
+	  Chrome&Safari:-webkit-
+	  例:brackground:-webkit-linear-gradient(...);
+  5.文本格式化属性(字体&文本属性)
+    (1)字体属性
+      ①字体类型 font-family
+        取值:用逗号隔开字体名称列表
+	例:font-family:'黑体','宋体','微软雅黑'...;
+      ②字体大小 font-size
+        取值:px/pt
+      ③字体加粗 font-weight
+        取值:bold/nomal/value(无单位的整百位数字 400=normal 900=bold)
+	例:font-weight:900;
+      ④字体倾斜 font-style
+        取值:italic/normal
+	html标签:<i></i>  <em></em>
+      ⑤小型大写字母 font-variant
+        取值:normal/small-caps(小型大写字母)
+      ⑥简写
+        font:style variant weight size family;
+	使用简写形式,必须使用family值,否则无效
+	例:font:italic small-caps bold 30px '宋体';
+    (2)文本格式
+      ①文本颜色 color
+      ②文本排列 text-align
+        作用:指定文本,行内,行内块元素的水平对齐方式
+        取值:left/right/center/justify
+      ③文本修饰 text-decoration
+        取值:none/underline(下划线)/overline(上划线)/line-through(删除线<s>)
+      ④行高 line-height
+        作用:设置一行数据所占的高度
+	取值:px/无单位数字(行高是字体大小的多少倍)
+	注意:如果行高比文字大,该行文本将在指定行内垂直居中
+      ⑤首行缩进 text-indent
+        取值:px/em
+      ⑥文本阴影 text-shadow
+        取值:h-shadow v-shadow blur color
+  6.表格属性
+    (1)表格常用属性
+      padding/border/width/height/font-/text-/background
+      vertical-align 指定单元格的垂直对齐方式
+      注意:<table>标签有margin属性,<td>没有
+        取值:top/middle/bottom 
+    (2)表格特有属性 <table>
+      ①边框合并 border-collapse
+        取值:separate 默认值,即分离边框
+	     collapse 合并边框     
+      ②边框边距 border-spacing
+        作用:设置单元格之间或单元格与表格之间的间距
+        例:border-spacing:2px;
+	   border-spacing:2px 4px;
+      ③标题位置 caption-side
+        取值:top 默认值,在表格正上方
+	     bottom 在表格正下方
+      ④显示规则 table-layout
+        作用:指定td尺寸的计算方式
+	取值:auto 默认值,自动布局
+	     fixed 固定布局,列的尺寸由设定的值为准
+	比较:
+	  自动布局:
+	    单元格的大小适应内容,比较灵活;
+	    但表格复杂时,加载速度较慢;
+	    适用于不确定每列大小且表格不太复杂的情况
+	  固定布局:
+	    单元格的尺寸取决于设定的值,不够灵活;
+	    加速显示表格;
+	    适用于确定每一列的大小时使用
+  7.列表属性
+    (1)列表项标识 list-style-type
+      取值:none/disc/circle/square
+    (2)列表项图像 list-style-image
+      取值:url()
+    (3)列表项位置 list-style-position
+      取值:outside 默认值,标识放在li外面
+           inside 标识放在li里面
+    (4)列表属性简写 list-style:type url() position;
+      常用方式:list-style:none;
+  8.显示属性 display/visibility/opacity/vertical-align/cursor
+    (1)显示方式 dispaly 
+      显示方式:决定元素在网页中的表现形式(块级/行内/行内块)
+      取值:none 不显示(隐藏)元素
+           block 表现为块级元素
+           inline 表现为行内元素
+	   inline-block 表现为行内块元素
+	     行内块元素:排列方式如同行内元素,但是具备块级元素的特征,允许修改尺寸,也可以设置垂直外边距,但会影响整行
+	     行内元素有表单控件(除单/复选框)
+	     特点:允许修改尺寸;
+	   table 表现为表格形式
+	     特点:尺寸以内容为主;每个元素独占一行;允许修改尺寸
+    (2)显示效果 visibility
+      显示/隐藏
+      取值:visible 可见,默认值
+           hidden 隐藏
+	     display:none 与 visibility:hidden比较:
+               display:none 脱离文档流,不占据页面空间,也不显示元素
+	       visibility:hidden 仍占据页面空间,但不显示元素
+    (3)透明度 opacity
+      取值:0-1
+        opacity与rgba()比较:
+	  opacity 作用于元素,跟元素相关的颜色都会发生透明度的变化
+          rgba() 只作用于当前颜色的某一个颜色值
+    (4)垂直对齐方式 vertical-align
+      使用场合:
+        ①表格:top/middle/bottom
+        ②图片:top/middle/bottom/baseline(基线对齐,默认值)
+    (5)鼠标光标的状态 cursor
+      取值:default 默认,箭头
+           pointer 小手状态
+	   crosshair 瞄准 +
+	   text 文档 I
+	   wait 等待 o
+	   help 帮助 ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

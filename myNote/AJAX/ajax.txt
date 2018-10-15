@@ -1,0 +1,368 @@
+AJAX
+1.http协议
+  (1)url详解
+    url用于表示任意资源的位置
+    常用格式:协议+主机名+目录结构+文件名
+    完整格式:<scheme>://<user>:<pwd>@<host>:<port>/<path>:<params>?<query>#<frag>
+             scheme:协议,方案,常用的协议:http/https
+	            ftp 21 文件上传/下载
+		    SSH 22 安全的远程登录
+		    TELNET 23 远程登录
+		    SMTP 25 邮件传输
+		    DNS 53 域名解析
+		    POP3 110 邮件接收
+		    HTTP 80 超文本传输
+		    HTTPS 443 加密的HTTP
+	     user:用户名
+	     pwd:密码
+	     host:主机(本地主机:127.0.0.1\localhost)
+	     port:端口号(80)
+	     path:路径,资源在服务器上的存放位置
+	     params:参数
+	     query:查询字符串
+	     frag:锚点(仅限前端)
+  (2)http协议
+    即:Hyper Text Transfer Protocol 超文本传输协议,用来规范数据是如何打包及传输
+    request请求消息
+      客户端要带给服务器的数据,由三部分组成:
+        请求起始行:
+	  请求方法
+	    get 获取数据,无请求主体,靠地址栏传递字符串
+	    post 传输数据,有请求主体             
+	    put 客户端放置文件到服务器
+	    delete 通过客户端删除服务器上的数据
+	    head 客户端只获取指定的响应头
+	    connect 测试连接
+	    trace 追踪请求路径
+	    options 选项,保留以后使用
+          请求url
+	  协议版本  http/1.1
+	请求头
+	  host:localhost
+	    作用:告诉服务器请求的是哪个主机
+	  connection:keep-alive
+	    作用:告诉服务器要进行持久连接
+	  user-agent
+	    作用:告诉服务器浏览器的类型
+          accept-language:zh-cn(中文简体)
+            作用:告诉服务器浏览器能接收的自然语言
+	  accept-encoding:gzip
+	    作用:告诉服务器浏览器能接收的压缩数据类型
+	  referer:http://localhost/01-login.html
+	    作用:告诉服务器请求来自哪个页面
+	请求主体
+	  form data(post方法)
+    response响应消息
+      响应的起始行
+        协议版本:http/1.1
+	响应的状态码  $
+	  作用:告诉浏览器,服务器的响应状态是什么
+	  1**:提示信息
+	  2**:响应成功
+	    200:响应成功 ok
+	  3**:需要进行重定向
+	    301:永久重定向
+	    302:临时重定向
+	    304:Not Modified 请求未被修改,走缓存
+	      解决:清除浏览器缓存,检查前端代码
+	  4**:客户端请求错误
+	    404:Not Found 请求资源不存在(文件路径)
+	    403:Forbiden 权限不够
+	    405:Method Not Allowed 请求方法不被允许
+	  5**:服务器运行错误
+	    500:服务器内部错误
+	      解决:重启xampp/nodejs;
+        原因短句:对状态码的解释说明
+      响应的头
+        Date:响应时间
+	connection
+	  作用:告诉浏览器已经启动持久连接
+	content-type  $
+	  作用:响应的主体类型,告诉浏览器该用什么方式解析响应主体
+	  取值:text/html html文本
+	       text/plain 普通文本
+	       text/css css样式
+               application/javascript js脚本
+	       application/xml xml格式的字符串
+	       application/json json格式的字符串
+               image/png 图片
+      响应的主体
+        Response查看
+  (3)缓存
+    缓存:客户端将服务器响应回来的数据进行自动保存,当再次访问时,直接使用保存的数据
+    优点:
+      减少冗余数据的传递,节省客户端流量;
+      降低对服务器资源的消耗和运行要求;
+      降低由于远距离传输造成的延时加载
+    与缓存相关的消息头
+      Cache-Control
+        作用:从服务器将文档传到客户端之时起,此文档处于新鲜的秒数
+	语法:Cache-Control:max-age=秒数
+      Expires
+        作用:指定缓存过期的确切时间(GMT)
+	语法:Expires ---Thu,30 Aug 2018 03:8:30(GMT)
+    在网页中设置缓存消息头 $
+      <meta http-equiv='消息头' content='值'>
+      例:<meta http-equiv='Cache-Control' content='max-age=3600'>
+  (4)网站优化
+    Cookie
+      利用Cookie来辨认使用者,以方便响应当前使用者需要的内容
+    http优化
+      发起请求-->建立连接-->处理请求-->构建响应-->发送响应-->记录日志
+      http连接性能优化
+	减少连接创建次数---使用keep-alive
+	减少请求次数---合理设置缓存
+        提高服务器端的运行速度
+	尽量减少响应数据的长度---启用压缩
+      安全协议
+        https协议:安全版本的http协议
+	  应用数据层-->SSL记录协议层(加密)-->TCP传输层-->IP
+	  客户端发送请求,在SSL层加密,服务器接收到密文,在SSL层解密,最终得到请求的明文,对请求进行处理;服务器发送响应消息时,在SSL层加密,客户端接收到密文,在SSL层解密,得到响应明文,解析响应内容(SSL:为数据通讯提供安全支持)
+2.DOM操作
+  (1)完整的js组成
+    js核心:ECMA Script
+    DOM:Document Object Model 文档对象模型
+      让js动态地操作页面的元素
+    BOM:Browser Object Model 浏览器对象模型
+      让js动态地操作浏览器
+  (2)使用js获取页面上的某个元素   document.getElementById('id')
+    根据指定的id值获取对应的html元素
+    1)为元素增加id属性
+      <div id='d1'>文本内容</div>
+    2)在js中,允许通过元素的id来获取元素
+      document.getElementById('d1');
+      例：单击按钮时，在控制台中打印p
+          <p id='p1'>测试文本</p>
+	  <input type="button" value='Next' onclick='getMsg()'>
+	  <script>
+	    function getMsg(){
+	      var cont=document.getElementById('p1');
+		console.log(cont);
+	    }
+	  </script>
+  (3)获取/设置某元素中的内容    innerHTML
+      DOM对象的一个属性:innerHTML,表示的是获取标签中的所有内容(表单元素除外)
+      例:var cont=document.getElementById('h1');
+	 console.log(cont);  //<h1>...</h1>
+	 console.log(cont.innerHTML);  //h1标签里的内容
+	 cont.innerHTML='bom操作内容';  //更改h1内容
+  (4)获取/设置表单控件的内容   value属性
+     1)通过id获取表单控件元素
+     2)通过value属性获取/设置值
+     例:<input type="text" value='恭喜发财' id='gxfc'><br>
+	<input type="button" value='获取输入框的文本' onclick='getMsg()'>
+	<script>
+	  function getMsg(){
+	    var cont=document.getElementById('gxfc');
+		console.log(cont.value);
+		cont.value='大吉大利'
+	  }
+	</script>
+  练习: 点击按钮后,将输入框中的内容放置在div中
+        <input type="text" id='uname' value='dingding'>
+	<div id='d1'></div>
+	<input type="button" value='Next' onclick='getUname()'>
+	<script>
+	  function getUname(){
+	    var cont1=document.getElementById('uname'),
+		cont2=document.getElementById('d1');
+	    cont2.innerHTML=cont1.value;    
+	  }
+	</script>
+  (5)简化document.getElementById()
+    function $(id){
+      return document.getElementById(id);
+    }
+    引入:<script src='../common.js'></script>
+  (6)HTML元素的事件
+    事件:允许通过用户的行为来激发的操作
+      onlick 鼠标单击事件
+      onfocus 文本框/密码框获取焦点事件
+      onblur 文本框/密码框失去焦点事件
+3.AJAX
+  (1)同步和异步
+    同步(Synchronous):在一个任务进行时,不能开启其它任务
+      同步访问:浏览器向服务器发送请求时,浏览器只能等待服务器的响应,不能做其它事情
+      出现场合:地址栏输入网址访问网页;a标记的默认跳转;submit按钮的表单提交
+    异步(Asynchronous):在一个任务进行时,可以开启其它任务
+      异步访问:浏览器在向服务器发送请求时,不耽误用户在网页上做其它操作
+      出现场合:用户名重复验证;搜索建议;聊天室;股票走势图
+
+  (2)AJAX:Asynchronous Javascript And Xml 异步的js和xml
+    本质:使用js提供的异步对象(XMLHttpRequest),异步地向服务器发送请求,并接收响应的数据
+    AJAX中,可以无刷新的更改页面中的布局内容
+
+  (3)异步请求的步骤
+    1)创建AJAX对象(XHR)
+      标准创建:var xhr=new XMLHttpRequest();
+      IE8以下:var xhr=new ActiveXObject('Micosoft.XMLHttp'); 
+      判断:通过window.XMLHttpRequest来判断浏览器是否支持标准创建  不支持:null 
+	  if(window.XMLHttpRequest){
+	    var xhr=new XMLHttpRequest();  //true 标准创建
+	  }else{
+	    var xhr=new ActiveXObject('Micosoft.XMLHttp');  //false IE8以下创建方法
+	  }
+    2)绑定监听事件
+      readyState属性
+        作用:用于表示xhr对象的请求状态
+	值: 0 请求尚未初始化
+	    1 已经打开到服务器的链接,正在发送请求
+	    2 接收响应头
+	    3 接收响应主体
+	    4 接收响应数据成功
+	注意:只有当readyState的值为4的时候,才表示所有的响应都已经接收完成
+      status属性
+        作用:表示服务器的响应状态 
+	值: 200 服务器已经正确处理请求并作出响应
+      onreadystatechange事件
+        作用:当xhr对象的readyState属性值发送改变时,要自动激发的操作(事件)
+	语法:
+	  xhr.onreadystatechange=function(){
+	    if(xhr.readyState==4 && xhr.status==200){
+	      var result=xhr.responseText;
+	      console.log(result);
+	    }
+	  }
+    3)打开链接
+      open() 
+        作用:打开链接(创建请求)
+        语法:
+	  xhr.open(method,url,isAsyn);
+	    1.method 请求方法  string类型:'get'/'post'
+	    2.url 请求路径  string类型:''
+	    3.isAsyn  boolean类型:true(异步)/false(同步)  
+    4)发送请求
+      send() 
+        语法:
+	  xhr.send(body)  
+	    body:请求主体,如果没有请求主体,用null替换body
+    例: <input type="button" value='Exe' onclick='fn()'>
+	<div id='d1'></div>
+        <script src='common.js'></script>
+        <script>  
+	  function fn(){
+	    var xhr=$xhr();
+		xhr.onreadystatechange=function(){
+	          if(xhr.readyState==4 && xhr.status==200){
+		    var result=xhr.responseText;
+		    $('d1').innerHTML='<h1>'+result+'</h1>';  //js中拼接html标签
+		  }
+		}
+		xhr.open('get','/demo/ajaxExe',true);
+		xhr.send(null);
+	  }
+	</script>
+	
+  (4)使用get/post方法提交数据
+    get:
+      例题: <p>用户名:<input type="text" id='uname'></p>
+	    <p>密码:<input type="text" id='upwd'></p>
+	    <input type="button" value='提交' onclick='fn()'>
+	    <script src='common.js'></script>
+	    <script>
+	      function fn(){
+	        var xhr=$xhr();
+	        xhr.onreadystatechange=function(){
+	          if(xhr.readyState==4 && xhr.status==200){
+		    var result=xhr.responseText;
+		    alert(result);
+	          }
+	        }
+	        var uname=$('uname').value,
+		    upwd=$('upwd').value;
+	        xhr.open('get','/demo/ajaxLogin?uname='+uname+'&upwd='+upwd,true);  //?
+	        xhr.send(null);
+	      }
+	    </script>
+	  响应结果:
+	    Request URL: http://127.0.0.1:5000/demo/ajaxLogin?uname=tom&upwd=45612
+	    Query String Parameters: uname: tom    upwd: 45612
+    post:
+      注意:
+        1.post的请求数据要放到请求主体中
+	  var res='user_name='+uname+'&user_pwd='+upwd;  //=很重要
+          xhr.send(res); 
+        2.在发送请求之前，需要手动修改请求的消息头
+          xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+      例：<form>
+	    用户名:<input type="text" id='uname'><br><br>
+	    密&nbsp;&nbsp;&nbsp;码:<input type="text" id='upwd'><br><br>
+	    <input type="submit" value='提交' onclick='fn()'>
+	  </form>
+	  <script src='common.js'></script>
+	  <script>
+	    function fn(){
+	      var xhr=$xhr();
+	      xhr.onreadystatechange=function(){
+	        if(xhr.readyState==4 && xhr.status==200){
+		var result=xhr.responseText;
+		  alert(result);
+	        }
+	      }
+	    var uname=$('uname').value,
+		upwd=$('upwd').value;
+	    xhr.open('post','/demo/ajaxLogin',true);  
+	    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	    var res='uname='+uname+'&upwd='+upwd;    //=很重要
+	    xhr.send(res);   //请求数据
+	    }
+	</script>
+	响应结果:
+	  Request URL: http://127.0.0.1:5000/demo04.html
+	  From Data: uname: tom     upwd: 45612
+
+  (5)JSON
+    1.sql查询的结果是一个数组,但数组不能直接传回前端,需要将数组转换成json格式;
+    前端网页中不能直接读取json格式的数据,需要转换成js对象/js数组
+    2.json:javascript object notation  
+      js对象表示法:即以js对象(object)的数据格式表现出来的字符串(string)
+    3.json语法
+      json数据
+        json中用{}来表示一个对象
+	对象中的属性名称,必须用""包起来.如果是字符串,也必须用""包起来
+	表现出来的是字符串,所有最外面必须加''
+        例:var j='{"name":"tom"}';
+           var jsonArr='[{"name":"lisa"},{"name":"lucy"},{"name":"ada"}]';
+
+    4.json字符串-->js对象/数组
+      JSON.parse() 将json字符串解析为js对象/数组
+      
+  (6)XML
+    XML:eXtensible Markup Language  可扩展(没有预定义过)的标记语言
+    xml的宗旨是做数据传递,而非数据显示
+    DOM把xml文档(document)当做树结构来查看,能够通过DOM树来访问所有元素
+    语法:
+      xml可以保存独立的*.xml的文件,也可以以字符串的方式出现
+      xml的声明
+        需要放在文件的最顶端
+        <?xml version='1.0' encoding='utf-8'?>
+      xml标记语法
+        成对出现;
+	严格区分大小写;
+	允许嵌套;
+	允许自定义属性,属性值必须用""号包起;
+	每个xml文件,必须有一个根元素
+	<studentList>
+          <student>
+            <name>lala</name>
+          </student>
+        </studentList>
+      解析xml文档对象的内容
+        getElementsByTagName('tag_name');
+	返回一个包含指定元素们的类数组
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+

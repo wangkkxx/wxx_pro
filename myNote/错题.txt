@@ -1,0 +1,56 @@
+1.concat()拼接数组
+var datas = [10,20,30,40,50];
+var arr1 = datas.splice(3,2,60,70);
+arr1.concat(80);    
+console.log(arr1.toString());    //40,50
+
+2.字符串与数字比较,字符串会先尝试转换成数字再进行比较
+function func1(num){
+  if(num < 0)
+    console.log("负数");
+  else if(num === 0)
+    console.log("零");
+  else if(num > 0)
+    console.log("正数");
+  else
+    console.log("非数字");
+}
+func1("-1");    //负数    
+func1("0");    //非数字    ===比较
+
+function testFunc(num) {
+  if (num < 10)
+    console.log("小于10");    //Number("a")=NaN ->false
+  else if (num > 10)
+    console.log("大于10");
+  else
+    console.log("等于10");
+}
+testFunc("a");    //等于10
+
+
+3.乘除运算会有隐式转换
+var a='20',b=true,c=(a+10)/b;
+console.log(c)  //2010  
+
+4.SQL查询语句排序:WHERE/GROUP BY/ORDER BY/LIMIT
+
+5.栈内存&堆内存:数组对象储存在堆内存中
+var arr = [10, 20, 30];
+function add( arrayObj ){
+  for(var i in arr){
+    arrayObj[i] ++;
+  }
+  console.log( arrayObj );    //[11,21,31]
+}
+add( arr );
+console.log(arr);    //[11,21,31] 
+
+(function(){
+  var a=b=3;     //b=3;var a=b;
+})()
+console.log(b);  //3
+console.log(a);  //undefined
+
+var a=null
+console.log(typeof(a));  //object

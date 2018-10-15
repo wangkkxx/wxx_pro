@@ -1,0 +1,348 @@
+第二阶段
+ 讲师联系方式:QQ:445190209  g-yangyan@tedu.cn
+ 1.Html 5(2 days)
+  搭建网页结构,实现内容的体现
+ 2.Ajax(3 days)
+  实现数据异步交互
+ 3.Ajax项目(2 days)
+  完成用户表数据的增删改查(从前端页面发起异步请求)
+ 4.CSS 3(6 days)
+ 5.Bootstrap(4 days)
+ 6.Boot项目(3 days)
+
+1.HTML5
+  html 4.01(1999.12-2014)
+  xhtml 1.0(2000.1-2014)
+  Web基础知识
+    1.web与Internet
+      Internet:全球性的计算机互联网络,简称:因特网/互联网/交互网
+      提供的服务:
+        1.www(World Wide Web 万维网)服务:通过网络的方式去访问网站
+        2.Email:电子邮件
+        3.BBS:电子公告板,俗称论坛
+        4.FTP:文件的上传下载
+        5.telnet:远程访问/登录
+    2.Internet上的应用程序
+      C/S程序:Client/Server,通过指定的客户端连接服务器(桌面应用程序)
+      B/S程序:Browser/Server,通过浏览器访问服务器
+    3.web应用程序
+      web:运行在Internet之上的一种B/S结构的应用程序
+      web的作用:将各类信息和服务进行无缝连接,并提供生动形象的用户界面
+      web的工作原理:基于浏览器和服务器以及通信协议来完成数据的传输和展示
+        通信协议:规范了数据如何传递和打包
+    4.服务器:
+	  1.功能:存储信息;提供程序的运行环境;接收用户请求并给出响应;具有一定的安全功能
+	  2.服务器产品:
+	    TOMCAT(JAVA)/Apache/IIS
+	  3.服务器端技术(后端语言)
+	    Java/PHP/ASP.Net/Python/Node.js(前端技术,能操作数据库)
+    5.浏览器
+      1.功能:
+        代理用户提交请求(UA:user agent);
+	解析HTML/CSS/JS代码,以图形化的方式展示给用户;
+      2.浏览器产品:
+        Chrome/IE/Firefox/Safari/Opera(JS解析速度快,测试)
+      3.浏览器技术:HTML/CSS/JS
+  HTML
+    1.什么是HTML?
+      Hyper Text Markup Language 超文本标记语言
+      HTML的特点:
+        用带有<>的标记来标识;
+	以.html或.htm为后缀命名;
+	由浏览器解析运行;
+	嵌套脚本语言(js)
+    2.HTML的基础语法
+      (1)标记
+        又称元素/标签,在网页中表示一些功能
+        分类:
+	  封闭类型(双标记):<>...</>
+	  非封闭类型(单标记):<>或</>
+      (2)属性和值
+        修饰标记
+        <标记 属性1='值1' 属性2='值2'></标记>
+	标准(通有)属性:
+	  id:定义元素在页面中独一无二的标识
+	  style:在CSS中定义行内样式
+	  class:在CSS中引入类选择器
+	  title:鼠标悬停时元素上所提示的文字
+      (3)注释
+        语法:<!--注释文字-->
+	注意:注释不能嵌套;也不能出现在标记中
+    3.html文档结构
+      (1)文档的声明:<!doctype html>
+      (2)html页面:
+        根标记:<html></html>
+	网页头部:<head></head>  定义网页的全局信息
+	网页主体:<body></body>  显示网页的所有内容
+      (3)head元素
+        head是其他头元素的容器
+	快捷键:ctrl+B 运行网页
+	       alt+tab 切换窗口
+	       window+D 返回桌面
+	       ctrl+shift+N 创建网页模板
+	<title></title>:定义网页的标题
+	<meta>:定义全局信息,如:编码格式,关键词,描述内容,元标签等
+          <meta charset='utf-8'/>
+          <meta name='Keyword' content='关键词'/>
+          <meta name='Descrition' content='描述内容'/>
+	<style></style>:定义内部样式
+          <style type='text/css'></style>
+	<script></script>:定义/引用js脚本
+	<link>引入css文件
+	  <link rel='stylesheet' href=''/>
+      (4)body元素
+        修饰body的属性:
+	  text:定义整个网页的文字颜色
+	  bgcolor:定义网页的背景颜色
+    4.文本标记
+      (1)特殊字符
+        &nbsp; 空格
+	&lt; <
+	&gt; >
+        &copy; 版权©
+	&yen; 人民币¥
+	&reg; 注册(商标)®
+	&times; 关闭×
+      (2)文本样式标记
+        <b></b> 加粗
+	<i></i> 倾斜
+	<u></u> 下划线
+	<s></s> 删除线
+	<sub></sub> 下标
+	<sup></sup> 上标
+      (3)标题元素 h1~h6 
+        h1~h6 <h1>标题文字</h1>
+	特点:可以改变字体的大小;加粗显示;元素之间自带上下空白间距(独占一行)
+	属性:align:设置内容水平对齐方式  center/left/right
+      (4)段落标记 <p></p>
+        <p>内容</p>
+	特点:独占一行;上下文之间有空白间距;字体无加粗和大小变化
+	属性:align
+      (5)换行标记 <br>
+      (6)分割线 <hr>
+        属性:width/align/size/color
+      (7)预格式化 <pre></pre>
+        作用:用于保留html代码中回车和空格
+      (8)分区元素
+        块分区元素:用于页面的布局  
+	行分区元素:处理同一行文本的不同样式 
+      (9)行内元素与块级元素
+        行内元素:span\i\b\u\s\sub\sup\img
+	块级元素:p\div\h1~h6\table\form       
+    5.图像和链接
+      (1)URL:Uniform Resourse Locator统一资源定位器
+	绝对路径:
+	  网络资源路径:协议+主机+文件目录结构+文件名称
+	  本地绝对路径:C:\xampp\htdocs\...
+	相对路径:
+          从当前文件所在的位置开始查找所经过的路径
+          同级目录:直接引用 jd_logo.png
+	  子级目录:先进入,再引用 img/page.jpg
+	  父级目录:先返回,再引用 ../../jd_logo1.png
+	根相对路径:
+	  从web站点的根目录处开始查找  /codeboy/img/a.jpg
+      (2)图像 <img>
+        图像的格式:png/jpg/gif
+	语法:<img src='' alt='' width='' height=''/>
+	属性:src 图像的url
+	     alt 图片不能正常加载时显示的提示文字
+	     width 宽度
+	     height 高度
+	注意:img是行内元素,但是有width和height属性;width/height等比例缩放;
+      (3)链接 <a></a>
+        语法:<a href='' target=''></a>
+	属性:href 链接的url
+	     target 指定打开新网页的方式
+	       _self:默认值,在当前网页中打开
+	       _blank:在新标签页中打开
+	链接的其他表现形式:
+	  资源下载:让链接的url,链接到rar/zip文件 <a href='a.rar'>下载</a>
+	  电子邮件:<a href='mailto:1428852251@qq.com'>email<a>
+	  返回页面顶部:<a href='#'>返回顶部</a>
+	  链接到js:<a href="javascript:js代码">执行js代码</a>
+	  锚点:a.定义锚点:
+	         <a name='锚名'></a>
+		 (也可以使用任意元素的id属性定义锚点)
+	       b.链接到锚点
+	         当前页面:<a href='#锚名'></a>
+		 其他页面:<a href='网页路径#锚名'></a>
+    6.表格 table 
+      (1)表格作用
+        按照一定的结构显示数据，数据保存在单元格中；既可以显示数据，也可以设置页面的布局
+      (2)语法
+        <table>
+	  <tr>  <!--行-->
+	    <td></td>  <!--列-->
+            ...
+	  </tr>
+	  ...
+	</table>
+      (3)属性
+        table属性:
+	  border:边框
+	  width:宽度
+	  height:高度
+	  align:水平对齐
+	  bgcolor:背景颜色
+	  cellpadding:单元格内边距
+	  cellspacing:单元格外边距
+	tr属性:
+	  height/align/bgcolor
+	  valign:top/middle/bottom
+	td属性:
+	  width/height/align/valign/bgcolor
+	  colspan:跨列(横向合并)  例:<td colspan=4>总计</td>
+	  rowspan:跨行(纵向合并)  例:<td colspan=2>...</td> (删除合并的单元格)
+      (4)可选标记
+        <caption>:表格标题  <table><caption>表名</caption>...</table>
+	<th>:行/列名(替换<td>,加粗,居中显示)
+      (5)复杂应用
+        a.表格嵌套:被嵌套的内容放在<td>中
+	b.行分组:
+	  <thead></thead>
+	  <tbody></tbody>
+	  <tfoot></tfoot>
+    7.列表 
+      (1)列表分类
+        有序列表:<ol></ol>  <li></li>
+        无序列表:<ul><ul>  <li></li>
+	自定义列表:<dl></dl>  <dt></dt> <dd></dd>
+	  <dt>被定义对象
+	  <dd>定义内容
+	  常用于图文混排
+      (2)列表属性
+        有序列表:
+	  type:1/a/A/i/I
+	  start:指定起始编号从第几位开始  例:<ol type='A' start='3'>  C开始 
+	无序列表:
+	  type:disc/circle/square/none
+      (3)列表的嵌套
+        <li></li>中嵌套
+    8.结构标记
+      作用:用于网页的基本结构(取代div做布局),提升代码的语义性,方便后期阅读和维护
+      <header>:头部
+      <nav>:导航栏
+      <aside>:侧边栏
+      <section>:主体
+      <footer>:尾部
+      <article>:描述与文字相关的内容
+    9.表单
+      (1)作用
+        提供可以与用户交互的可视化控件;
+	收集用户信息,并提交给服务器
+      (2)组成
+        前端:表单控件,与用户交互
+	服务器端:对提交数据的处理
+      (3)表单
+        标记:<form></form>
+        属性:
+	  action:定义表单提交时发生的动作,通常定义服务器处理程序的地址(url),默认提交给本页
+          method:指定表单数据的提交方式
+	    值:get 默认值,明文提交;提交数据有大小限制(2KB);一般向服务器请求数据时使用
+	       post 隐式提交;提交的数据无大小限制;一般在需要向服务器传递数据时使用
+	       delete
+	       put
+	  enctype:指定表单数据的编码方式,允许将何种数据提交给服务器
+	    值:
+	      application/x-www-form-urlencode 默认值,允许将任意字符提交给服务器(文件除外)
+	      multipart/form-data 允许将文件提交给服务器
+	      text/plain 只能提交普通字符
+      (4)表单控件
+        input 
+	  作用:在页面中提供各种输入的控件,如:文本框\密码框\单选按钮\复选框等
+	  语法:<input/>
+	  属性:
+	    type 指定输入控件的类型
+	      值:text/password/submit/button/reset/radio(单选框)/checkbox(复选框)/hidden(隐藏域)/file(文件选择框)
+	        单选框:<input type='radio' name=sex checked>男
+	               <input type='radio' name=sex>女
+		复选框:<input type='checkbox' name='habby[]'>琴
+	               <input type='checkbox' name='habby[]'>棋
+		       <input type='checkbox' name='habby[]'>书
+		       <input type='checkbox' name='habby[]'>画
+		隐藏域:<input type='hidden' name='uid' value='10'>
+                文件选择框:<form method='post' enctype='multipart/form-data'>
+		           ...
+			   <input type='file' name='ava'>
+	    name 为控件定义名称,提交给服务端使用
+	    value 控件的值,提交给服务器
+	    disabled 禁用控件,不能操作,也不能提交给服务器,该属性无值
+	    maxlength 指定限定输入的字符数
+	    readonly 只读,允许提交,无值属性
+	    placeholder 占位,即默认显示在控件上的文本
+	    checked 无值属性,设置默认选中项
+	textarea
+	  作用:允许录入多行数据的文本框
+	  语法:<textarea></textarea>
+	  属性:
+            name 定义控件名称,提供给服务器用
+            readonly 只读,无值属性
+	    cols 指定文本域的列数,即一行能显示多少个英文字符
+	    rows 指定文本域的行数,即默认显示多少行数据,超出时会出现滚动条
+	select
+	  标记:<select></select>(选项框)  <option></option>(具体选项)
+          select属性:
+	    name 定义选项框名称
+	    size 定义显示选项的数量,默认值为1
+	    multiple 设置多选,无值属性(按Ctrl键多选)
+	  option属性:
+	    value 定义选择的值
+	    selected 无值属性,设置默认选中项
+	其他
+	  lable 关联文本与表单控件
+	    语法:<lable></lable>
+	    属性:for
+	         例:<input type='radio' name='sex' id='man'>
+	            <label for='man'>男</label>
+          fieldset 为控件分组
+	    语法:<fieldset></fieldset>  <legend></legend>(为分组指定标题)
+	        例:<fieldset>
+		     <legend>标题</legend>
+		     其他控件
+		   </fieldset>
+          iframe 浮动框架
+	    作用:允许在一个网页中,再引入另一个网页进来
+	    语法:<iframe src='' frameboder='0' width='' height=''></iframe>
+	    属性:
+	      src 指定要引入网页的url
+	      width 设置框架的宽度
+	      height 设置高度
+	      frameborder 浮动框架的边框,默认值为1
+      (5)新表单元素
+        电子邮件类型:<input type='email'>
+	  作用:在表单提交时,会验证数据是否符合email的规范
+	搜索类型:<input type='search'>
+	  作用:提供了快速清除功能
+	URL类型:<input type='url'>
+	  作用:提交时,验证数据是否符合url的规范
+	数字类型:<input type='number'>
+	  作用:只能接受数字,并且可以灵活调整数字的值
+	  属性:value 控件的值
+	       min 最小值
+	       max 最大值
+	       step 每次调整时,数字的变化范围
+	电话号码类型:<input type='tel'>
+	  作用:在移动设备中,显示为拨号键盘效果
+	范围类型:<input type='range'>
+	  作用:提供滑块组件,允许用户选取指定范围的值
+	  属性:min 最小值
+	       max 最大值
+	       value 初始值
+	       step 步长
+	颜色控件:<input type='color'>
+          作用:提供一个颜色的拾取器
+	日期类型:<input type='date'>
+	周类型:<input type='week'>
+	月类型:<input type='month'>
+
+
+
+
+
+
+
+
+
+
+
+

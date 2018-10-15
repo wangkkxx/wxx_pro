@@ -1,0 +1,242 @@
+JS核心
+ftp://176.16.20.8/
+准备:
+  张东 zhangdong@tedu.cn
+  书:JavaScript权威指南
+  公众号:前端大全
+ 
+一.正则表达式
+  regexper.com
+  匹配字符  []
+    [0-9]
+    [A-Z]
+    [a-z]
+    [A-Za-z] 一位字母
+    [0-9A-Za-z]
+    [\u4e00-\u9fa5] 匹配一位汉字
+      车牌:[\u4e00-\u9fa5][A-Z].[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]
+  预定义字符集
+    \d 一位数字  [0-9]
+    \w 一位字符或数字或下划线  [0-9A-Za-z_]
+    \s 一位空字符 
+    .  通配符
+    \D 非数字字符
+    \S 非空白字符
+    \0 查找NULL字符
+  量词 {}
+    {n,m} 至少n次,最多m次
+    {n,}  n次以上
+    {n}   必须n次
+    ?  可有可无,最多一次
+    *  可有可无,多了不限
+    +  至少一个,多了不限
+  选择和分组 
+    () 分组
+    |  选择,没有字符限制
+    手机号:(\+86|0086)?\s*1[3-8]\d{9}
+  匹配特殊位置
+    ^  字符串开头    ^\s+
+    $  字符串结尾    \s+$
+      同时匹配开头或结尾的空字符:^\s+|\s+$
+    \b 单词边界
+  邮箱格式:\w+@\w+\.(com|net|org|cn)(\.cn)?
+      
+二.String的正则API
+  1.查找关键词
+    indexOf()/lastIndexOf()
+    search(/正则表达式/)
+    正则:
+      i 忽略大小写
+      g 全局
+  2.获取关键词内容
+    match(/正则/ig)
+    返回值:null/["0":关键词,"index":i]
+  3.查找关键词的内容和位置
+    reg.exec()
+  4.替换
+    replace(/正则/,"")
+      判断是否为null:console.log(`共替换${arr!=null?arr.length:0}处`);
+    高级替换
+      str=str.replace("正则",function(keyword));
+      例:单词首字母大写
+        str=str.replace(/\b[a-z]/g,function(kword){
+            return kword.toUpperCase();
+        });
+        console.log(str);
+    衍生操作:删除,将关键词替换为空字符串
+
+三.RegExp对象
+  API
+    1.验证字符串的格式
+      var bool=reg.test(str);
+      前加^,后加$,表示从头到尾必须完全匹配
+    2.查找关键词的内容和位置
+      var arr=reg.exec(str);
+      返回值:一次只返回一个关键词的内容和位置,但每执行一次exec,就自动找下一个关键词
+      reg对象中有一个lastIndex属性,表示下次开始查找的位置
+        reg.lastIndex=index+关键词.length
+四.function
+  1.使用
+    (1)声明
+    function 函数名(形参,...){
+      函数体;
+      return 返回值
+    }
+    缺陷:声明提前
+    (2)赋值
+    var 函数名=function(...){ ... }
+    (3)new
+    var fn=new Function(形参...,"函数体")
+  2.重载 overload
+    arguments 类数组对象
+    类数组对象:有下标/for遍历/length属性,不能使用数组API
+    例:
+      function pay(){
+        if(arguments.length==0)
+          console.log("现金支付");
+        else if(arguments.length==1)
+          console.log("手机支付");
+        else
+          console.log("银行卡支付");
+      }
+      pay();
+      pay(100);
+      pay(624215,123456);
+  3.匿名函数
+    回调函数--只使用一次
+    匿名函数自调--划分临时作用域
+      (function(){})()
+五.作用域和作用域链
+    全局作用域 函数作用域
+      for/if语句不是作用域
+      函数作用域不可重用
+    作用域链
+六.闭包
+  为一个函数永久绑定一个专属的可重用变量
+  闭包形成的原因:外层函数的作用域对象在调用后无法释放
+  缺点:多占内存
+  步骤:1.用外层函数包裹要保护的变量和内层函数
+       2.外层函数将内层函数对象返回到外部
+       3.调用外层函数,获得内层函数对象,保存在变量中
+  例:function outer(){
+        var i=1;
+        return function(){
+          console.log(i++);
+        }
+      }
+      var getNum=outer();
+      getNum();  //1
+      getNum();  //2
+
+七.OOP面向对象
+  便于大量数据的管理和维护  
+  特点:封装/继承/多态
+    1.封装:创建一个对象结构来集中保存一个事物的属性和功能
+      (1)var obj={
+        属性名:值,
+	...
+	方法名:function(){}    //简写:方法名(){}
+	...
+      }
+      this指向正在调用当前函数的.前的对象的关键字  --松耦合/紧耦合
+      如果一个函数不用.调用,则this指向window
+      (2)var obj=new Object()
+        js对象底层也是关联数组:
+	  访问不存在的属性,不报错,返回undefined
+	  强行给不存在的属性赋值,不报错,而是强行添加该属性
+          遍历对象的每个属性可以用for
+	  可用[]或.访问元素
+	    .key=["key"] 适用于固定的属性名
+	    [key] key为变量,不固定
+      (3)构造函数
+        描述一类对象统一结构的函数
+    2.继承
+      多个子对象要使用相同的方法
+      JS中的继承都是通过原型对象实现的
+      原型对象:集中存储所有子对象共有成员的父对象
+      每创建一个构造函数,都自动附赠一个原型对象
+      子对象.__proto__=构造函数.prototype
+      向原型对象中添加共有成员
+      构造函数.prototype.共有成员=值;
+      内置类型
+        String Number Boolean Array Date RegExp Error Function Object Math{} global{}
+        new:1.构造函数;2.原型对象
+      原型链
+        由多级父对象逐级继承,形成的链式结构
+        保存着所有对象的成员
+        控制着成员的使用顺序,先自有,再共有
+      自定义继承
+        (1)仅修改一个对象的父对象
+          子对象.__proto__=新父对象
+	  Object.setPrototypeOf(对象,新父对象);
+        (2)修改多个子对象的父对象
+          创建子对象之前:
+	  构造函数.prototype=father
+        (3)两种类型间的继承
+          定义抽象父类型:
+	    父类型的构造函数中保存相同的属性
+	    父类型的原型对象中保存相同的方法
+	  让子类型继承父类型
+	    在子类型构造函数中调用父类型构造函数
+    3.多态
+      同一个函数,不同情况下表现出不同的状态
+      重载
+      重写
+    4.静态方法
+      不需要创建子对象实例,用构造函数就可直接调用的方法  --不确定实例对象
+      实例方法:必须创建该类型的子对象,用子对象才能调用的方法
+      静态方法要定义在构造函数对象上,而不是添加在原型对象中
+
+八.ES5
+  1.严格模式
+    比普通JS运行机制要求更严格的模式
+    对整个js文件/<script>/function标签启用严格模式"use strict"
+    禁止给未声明的变量赋值:
+    静默失败:执行不成功,也不报错-->将静默失败升级为错误
+    普通函数调用中的this,不再指向window,而是undefined,严格模式下,默认指向window
+  2.保护对象
+    让使用者按照规则有限度的使用对象
+    命名属性:可以用.直接访问的属性
+    内部属性:不可以用.直接访问的属性,比如:class
+    保护命名属性:
+      1.数据属性:实际存储属性值的属性
+        属性:{
+	  value:属性值
+	  writable:true/false 控制是否可修改属性值
+	  enumerable:true/false 控制是否可被for-in遍历,但用.依然可以访问到
+	  configurable:true/false 控制是否可删除该属性和是否可修改,writable/enumerable,一旦改为false,不可逆
+	}
+	var attrs=Object.getOwnPropertyDescriptor(eric,"id");
+	Object.defineProperty(对象,"属性名",{
+	  特性:值,
+	  ...
+	  configurable:false
+	})
+        Object.defineProperty()  一次只能修改一个特性
+	Object.defineProperties(对象,{
+	  属性名1:{特性:值},
+          属性名2:{特性:值}
+	})
+	问题:无法使用自定义规则保护属性
+      2.访问器属性:不实际存储属性值,仅提供对其他数据属性的保护
+    保护对象的结构:禁止擅自删除或添加对象的属性
+      禁止添加新属性:Object.preventExtensions(obj)
+        每个对象都有一个内部属性:extensible:true
+      密封:在禁止添加新属性的基础上,进一步禁止删除现有属性
+        Object.seal(obj)--->extensible:false && configurable:false
+      冻结:在密封基础上禁止修改属性值
+        Object.freeze(obj)--->extensible:false&&configurable:false&& writable:false
+    
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+	<style>
+	  #banner{
+	    width:1000px;
+		height:400px;
+		margin:0 auto;
+		overflow:hidden;
+		position:relative;
+	  }
+	  ul{
+	    list-style:none;
+		margin:0;
+		padding:0;
+	  }
+	  .banner-img li{
+	    float:left;
+	  }
+	  .ck-side{
+	    width:35px;
+		height:70px;
+		position:absolute;
+		top:165px;
+	  }
+	  a.ck-left{
+	    background:#ddd url(img/index/arrow-left.png) no-repeat center center;
+		left:5px;
+	  }
+      a.ck-right{
+	    background:#ddd url(img/index/arrow-right.png) no-repeat center center;
+        right:5px;
+	  }
+	  .indc li{
+	    width:10px;
+		height:10px;
+		border-radius:50%;
+		background:#fff;
+		float:left;
+		margin-right:8px;
+	  }
+	  #banner .indc{
+	    position:absolute;
+		bottom:10px;
+		left:478px;
+	  }
+	  #banner .indc .active{
+	    background:#0aa1ed;
+	  }
+	</style>
+  </head>
+  <body>
+    <div id='banner'>
+	  <ul class='banner-img'>
+	  	<li><a href="#"><img src="img/index/banner1.png" alt=""></a></li>
+	  	<li><a href="#"><img src="img/index/banner2.png" alt=""></a></li>
+	  	<li><a href="#"><img src="img/index/banner3.png" alt=""></a></li>
+	  	<li><a href="#"><img src="img/index/banner4.png" alt=""></a></li>
+	  </ul>
+	  <a href="#" class='ck-left ck-side'></a>
+	  <a href="#" class='ck-right ck-side'></a>
+	  <ul class='indc'>
+	  	<li class='active'></li>
+	  	<li></li>
+	  	<li></li>
+	  	<li></li>
+	  </ul>
+	</div>
+  </body>
+</html>

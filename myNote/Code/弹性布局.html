@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+	<style>
+	  #container{
+	    margin:0 auto;
+		width:1000px;
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:space-between;
+	  }
+	  #container>div{
+	    background:#afafaf;
+		margin-bottom:10px;
+		border-radius:4px;
+	  }
+	  #container>div:first-child{
+	    width:609px;
+		height:377px;
+	  }
+	  #container>div:nth-child(2){
+	    width:381px;
+		height:377px;
+	  }
+	  #container>div:nth-child(3){
+	    width:377px;
+		height:233px;
+	  }
+	  #container>div.d1{
+	    width:198px;
+		height:233px;
+	  }
+	</style>
+  </head>
+  <body>
+    <div id='container'>
+	  <div></div>
+	  <div></div>
+	  <div></div>
+	  <div class='d1'></div>
+	  <div class='d1'></div>
+	  <div class='d1'></div>
+	</div>
+  </body>
+</html>
